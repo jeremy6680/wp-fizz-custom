@@ -1,0 +1,6 @@
+{
+    "require": {
+        "johnbillion/extended-cpts": "^4.5",
+        "wordplate/acf": "^9.1"
+    }
+}
