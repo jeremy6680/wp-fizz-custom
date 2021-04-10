@@ -21,7 +21,7 @@ class WPFizzCustom {
   }
 
   private function __construct() {
-    // initialize Docs custom post type
+    // initialize custom post types
     add_action('init', 'WPFizzCustom::register_post_type' );
 
     add_action('init', array( $this, 'custom_taxonomies' ) );
@@ -31,7 +31,7 @@ class WPFizzCustom {
   }
 
   /**
-   * Registers the Docs custom post type
+   * Registers custom post types using https://github.com/johnbillion/extended-cpts/wiki
    *
    * Defined statically for use in activation hook
    */
