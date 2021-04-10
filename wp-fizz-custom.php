@@ -4,10 +4,14 @@ Plugin Name: WP Fizz Custom
 Description: Plugin to register custom post types, custom taxonomies and custom fields
 Author: Jeremy Marchandeau
 Author URI: https://jeremymarchandeau.com
-Version: 1.0
+Version: 1.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
+
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+    require __DIR__ . '/vendor/autoload.php';
+}
 
 class WPFizzCustom {
   private static $instance;
