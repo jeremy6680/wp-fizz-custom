@@ -1,35 +1,13 @@
 <?php
 /*
 Plugin Name: WP Fizz Custom Post Type
-Description: Plugin to register a custom post type, its custom taxonomies and its custom fields
+Description: Boilerplate Plugin to register a custom post type, its custom taxonomies and its custom fields. This plugin requires Timber, ACF PRO, Extended ACF and Extended CPTs.
 Author: Jeremy Marchandeau
 Author URI: https://jeremymarchandeau.com
 Version: 1.1
 License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
-
-$filepath = get_template_directory() . '/vendor/autoload.php';
-
-if (file_exists($filepath)) {
-    require_once(get_template_directory() . '/vendor/autoload.php');
-    $timber = new Timber\Timber();
-} elseif ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
-    require __DIR__ . '/vendor/autoload.php';
-    $timber = new Timber\Timber();
-}
-
-// Set Timber Locations + possibility to override templates in theme
-Timber::$locations = array(
-
-	get_stylesheet_directory() . '/templates',
-    //get_stylesheet_directory() . '/views',
-    //get_stylesheet_directory() . '/components',
-    //get_template_directory() . '/templates/components',
-    //get_template_directory() . '/views',
-    //get_template_directory() . '/components',
-    plugin_dir_path( __DIR__ ) . '/templates/twig'
-);
 
 // Change the five instances of "WPFizzCustom" by the name of your custom post type
 class WPFizzCustom {
@@ -51,6 +29,15 @@ class WPFizzCustom {
 
   private function __construct() {
     // initialize custom post types
+
+    include( 'includes/init.php' );
+
+    include( 'includes/register-plugins.php' );
+
+    require_once( plugin_dir_path( __FILE__) . "/includes/libs/class-tgm-plugin-activation.php" );
+
+    add_action( 'tgmpa_register', 'register_required_plugins' );
+
     add_action('init', 'WPFizzCustom::register_post_type' );
 
     add_action('init', array( $this, 'custom_taxonomies' ) );
@@ -115,7 +102,7 @@ class WPFizzCustom {
    * Enqueues the stylesheet for our CPT
    */
   function add_styles_scripts() {
-    require('process/add-styles-scripts.php');     
+    require('includes/front/enqueue.php');     
   }
 
 
