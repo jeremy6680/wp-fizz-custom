@@ -9,9 +9,27 @@ License: GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+$filepath = get_template_directory() . '/vendor/autoload.php';
+
+if (file_exists($filepath)) {
+    require_once(get_template_directory() . '/vendor/autoload.php');
+} elseif ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
     require __DIR__ . '/vendor/autoload.php';
 }
+
+$timber = new \Timber\Timber();
+
+// Set Timber Locations + possibility to override templates in theme
+Timber::$locations = array(
+
+	get_stylesheet_directory() . '/templates',
+    //get_stylesheet_directory() . '/views',
+    //get_stylesheet_directory() . '/components',
+    //get_template_directory() . '/templates/components',
+    //get_template_directory() . '/views',
+    //get_template_directory() . '/components',
+    plugin_dir_path( __DIR__ ) . '/templates/twig'
+);
 
 // Change the five instances of "WPFizzCustom" by the name of your custom post type
 class WPFizzCustom {
@@ -79,7 +97,18 @@ class WPFizzCustom {
    * Add a custom template
    */
   function add_cpt_template( $template ) {
-    require('process/add-cpt-template.php');     
+    if (is_singular( self::CPT_SLUG)) {
+      // check the active theme directory
+      if (file_exists( get_stylesheet_directory() . 'single-' . self::CPT_SLUG . '.php')) {
+
+          return get_stylesheet_directory() . 'single-' . self::CPT_SLUG . '.php';
+      }
+
+      // failing that, use the bundled copy
+      return plugin_dir_path(__FILE__) . 'templates/single-' . self::CPT_SLUG . '.php';
+  }
+  
+  return $template;   
   }
 
   /**
