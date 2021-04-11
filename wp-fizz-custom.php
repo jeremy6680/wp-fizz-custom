@@ -13,11 +13,11 @@ $filepath = get_template_directory() . '/vendor/autoload.php';
 
 if (file_exists($filepath)) {
     require_once(get_template_directory() . '/vendor/autoload.php');
+    $timber = new Timber\Timber();
 } elseif ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
     require __DIR__ . '/vendor/autoload.php';
+    $timber = new Timber\Timber();
 }
-
-$timber = new \Timber\Timber();
 
 // Set Timber Locations + possibility to override templates in theme
 Timber::$locations = array(
