@@ -1,5 +1,4 @@
 <?php
-
 // cf https://github.com/johnbillion/extended-cpts/wiki
     register_extended_post_type( 
       

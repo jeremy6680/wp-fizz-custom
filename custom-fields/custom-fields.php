@@ -1,4 +1,5 @@
 <?php
+/* To create custom fields, I recommend using https://github.com/wordplate/extended-acf, cf example below */
 
     use WordPlate\Acf\Fields\Repeater;
     use WordPlate\Acf\Fields\Url;
@@ -15,10 +16,10 @@
         ])
         ->min(1)
         ->collapsed('resource')
-        ->buttonLabel('Add a resource')
+        ->buttonLabel( 'Add a resource' )
         ->layout('table')
       ],
         'location' => [
-          Location::if('post_type', 'docs'),
+          Location::if( 'post_type', self::CPT_SLUG ),
         ],
       ]); 
